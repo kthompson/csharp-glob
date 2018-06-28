@@ -101,7 +101,7 @@ namespace GlobExpressions
 
         public bool Matches(char c) => ExpandedCharacters.Contains(c) != this.Inverted;
 
-        private string CalculateExpandedForm(string chars)
+        private static string CalculateExpandedForm(string chars)
         {
             if (!chars.Contains("-"))
                 return chars;
@@ -163,7 +163,7 @@ namespace GlobExpressions
         public LiteralSet(params Identifier[] literals)
             : base(GlobNodeType.Identifier)
         {
-            Literals = literals.ToArray();
+            Literals = literals;
         }
 
         public LiteralSet(IEnumerable<Identifier> literals)

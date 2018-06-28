@@ -9,15 +9,15 @@ using BenchmarkDotNet.Running;
 
 namespace GlobExpressions.Benchmarks
 {
-    public class Program
+    public static class Program
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
             var config = new ManualConfig();
             config.Add(DefaultConfig.Instance);
             config.Set(config.GetSummaryStyle().WithTimeUnit(TimeUnit.Nanosecond));
 
-            BenchmarkRunner.Run<Benchmarks>(config);
+            BenchmarkRunner.Run<GlobBenchmarks>(config);
         }
     }
 }

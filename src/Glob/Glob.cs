@@ -17,7 +17,11 @@ namespace GlobExpressions
         public Glob(string pattern, GlobOptions options = GlobOptions.None)
         {
             this.Pattern = pattern;
+#if NET20 || NET35
+            if ((options & GlobOptions.Compiled) == GlobOptions.Compiled)
+#else
             if (options.HasFlag(GlobOptions.Compiled))
+#endif
             {
                 this.Compile();
             }

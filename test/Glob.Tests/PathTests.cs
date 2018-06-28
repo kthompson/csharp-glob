@@ -8,8 +8,7 @@ namespace GlobExpressions.Tests
 {
     public class PathTests
     {
-        private static string[] filenames = new[]
-        {
+        private static readonly string[] filenames = {
             @"C:\Users\Kevin\Desktop\notes.txt",
             @"C:\Users\Kevin\Downloads\yarn-0.17.6.msi",
             @"C:\Users\Kevin\Downloads\lotus_nightlight.stl",
@@ -42,31 +41,31 @@ namespace GlobExpressions.Tests
         [Fact]
         public void TestSimpleFilePattern()
         {
-            Assert.Collection(GetRegexForGlobPattern("*.txt"),
+            Assert.Collection(GetFilesForGlobPattern("*.txt"),
                 s => Assert.Equal(@"C:\Users\Kevin\Desktop\notes.txt", s));
         }
 
         [Fact]
         public void RootPatternMatchWithoutDirectory()
         {
-            Assert.Collection(GetRegexForGlobPattern(@"C:\*.*"));
+            Assert.Empty(GetFilesForGlobPattern(@"C:\*.*"));
         }
 
         [Fact]
         public void LinuxRootWithDirectoryWildcard()
         {
-            Assert.Collection(GetRegexForGlobPattern(@"/**/*.sln"),
+            Assert.Collection(GetFilesForGlobPattern(@"/**/*.sln"),
                 s => Assert.Equal(@"/mnt/e/code/csharp-glob/Glob.sln", s));
         }
 
         [Fact]
         public void WindowsRootWithDirectoryWildcard()
         {
-            Assert.Collection(GetRegexForGlobPattern(@"C:\**\*.txt"),
+            Assert.Collection(GetFilesForGlobPattern(@"C:\**\*.txt"),
                 s => Assert.Equal(@"C:\Users\Kevin\Desktop\notes.txt", s));
         }
 
-        private IEnumerable<string> GetRegexForGlobPattern(string pattern)
+        private static IEnumerable<string> GetFilesForGlobPattern(string pattern)
         {
             var glob = new Glob(pattern, GlobOptions.Compiled);
 

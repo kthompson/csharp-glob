@@ -6,6 +6,8 @@ using System.Text;
 
 namespace GlobExpressions
 {
+#if !NET20 && !NET35
+
     public static class GlobExtensions
     {
         public static IEnumerable<DirectoryInfo> GlobDirectories(this DirectoryInfo di, string pattern)
@@ -32,4 +34,6 @@ namespace GlobExpressions
             return di.EnumerateFileSystemInfos("*", SearchOption.AllDirectories).Where(info => glob.IsMatch(info.FullName.Remove(0, truncateLength)));
         }
     }
+
+#endif
 }

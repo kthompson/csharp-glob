@@ -7,12 +7,12 @@ namespace GlobExpressions.Tests
 {
     public class GlobExtensionTests
     {
-        private readonly string SourceRoot = Environment.GetEnvironmentVariable("APPVEYOR_BUILD_FOLDER") ?? Path.Combine("..", "..", "..", "..", "..");
+        private readonly string _sourceRoot = Environment.GetEnvironmentVariable("APPVEYOR_BUILD_FOLDER") ?? Path.Combine("..", "..", "..", "..", "..");
 
         [Fact]
         public void CanMatchBinFolderGlob()
         {
-            var root = new DirectoryInfo(SourceRoot);
+            var root = new DirectoryInfo(_sourceRoot);
             var allBinFolders = root.GlobDirectories("**/bin");
 
             Assert.True(allBinFolders.Any(), "There should be some bin folders");
@@ -21,7 +21,7 @@ namespace GlobExpressions.Tests
         [Fact]
         public void CanMatchDllExtension()
         {
-            var root = new DirectoryInfo(SourceRoot);
+            var root = new DirectoryInfo(_sourceRoot);
             var allDllFiles = root.GlobFiles("**/*.dll");
 
             Assert.True(allDllFiles.Any(), "There should be some DLL files");
@@ -30,7 +30,7 @@ namespace GlobExpressions.Tests
         [Fact]
         public void CanMatchInfoInFileSystemInfo()
         {
-            var root = new DirectoryInfo(SourceRoot);
+            var root = new DirectoryInfo(_sourceRoot);
             var allInfoFilesAndFolders = root.GlobFileSystemInfos("**/*info");
 
             Assert.True(allInfoFilesAndFolders.Any(), "There should be some 'allInfoFilesAndFolders'");
@@ -41,7 +41,7 @@ namespace GlobExpressions.Tests
         {
             var globPattern = @"**/*.sln";
 
-            var root = new DirectoryInfo(SourceRoot);
+            var root = new DirectoryInfo(_sourceRoot);
             var result = root.GlobFiles(globPattern).ToList();
 
             Assert.NotNull(result);
@@ -53,7 +53,7 @@ namespace GlobExpressions.Tests
         {
             var globPattern = @"*/*/*.csproj";
 
-            var root = new DirectoryInfo(SourceRoot);
+            var root = new DirectoryInfo(_sourceRoot);
             var result = root.GlobFiles(globPattern).OrderBy(x => x.Name).ToList();
 
             Assert.Collection(
@@ -69,7 +69,7 @@ namespace GlobExpressions.Tests
         {
             var globPattern = @"**/*[Tt]est*";
 
-            var root = new DirectoryInfo(SourceRoot);
+            var root = new DirectoryInfo(_sourceRoot);
             var result = root.GlobFileSystemInfos(globPattern).ToList();
 
             Assert.NotNull(result);
@@ -82,7 +82,7 @@ namespace GlobExpressions.Tests
         {
             var globPattern = @"**/*Gl*.Te*";
 
-            var root = new DirectoryInfo(SourceRoot);
+            var root = new DirectoryInfo(_sourceRoot);
             var result = root.GlobDirectories(globPattern).ToList();
 
             Assert.NotNull(result);

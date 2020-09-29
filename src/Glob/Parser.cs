@@ -76,8 +76,13 @@ namespace GlobExpressions
         {
             var items = new List<Identifier>();
             this.SkipIt(); // {
-            items.Add(this.ParseIdentifier(true));
 
+            if (this._currentCharacter == '}')
+            {
+                throw new GlobPatternException($"Expected literal at index {_sourceIndex}. Literal sets cannot be empty.");
+            }
+
+            items.Add(this.ParseIdentifier(true));
             while (this._currentCharacter == ',')
             {
                 this.SkipIt(); // ,

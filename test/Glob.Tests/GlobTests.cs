@@ -229,6 +229,19 @@ namespace GlobExpressions.Tests
             }
         }
 
+
+        [Fact]
+        public void ShouldNotAllowEmptyLiteralSet()
+        {
+            const string globPattern = @"{}";
+
+            Assert.Throws<GlobPatternException>(() =>
+            {
+                var glob = new Glob(globPattern, GlobOptions.CaseInsensitive);
+                Assert.False(glob.IsMatch(""));
+            });
+        }
+
         [Fact]
         public void ShouldNotMatchLiteralSet()
         {
